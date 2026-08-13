@@ -1,4 +1,8 @@
-const $=id=>document.getElementById(id),fmt=new Intl.NumberFormat(undefined,{style:'currency',currency:'USD'});
+const $=id=>document.getElementById(id);
+let currency=localStorage.getItem('pocket-ledger-currency')||'USD',iqdRate=Number(localStorage.getItem('pocket-ledger-iqd-rate'))||1460;
+const usdFmt=new Intl.NumberFormat(undefined,{style:'currency',currency:'USD'});
+const iqdFmt=new Intl.NumberFormat(undefined,{maximumFractionDigits:0});
+const fmt={format:amt=>currency==='IQD'?`${iqdFmt.format(amt*iqdRate)} IQD`:usdFmt.format(amt)};
 const categoryLabels={ku:{Food:'خۆراک',Transport:'گواستنەوە',Shopping:'کڕین',Bills:'پسوولەکان',Other:'هیتر',Salary:'موچە',Freelance:'کاری ئازاد',Gift:'دیاری',Rent:'کرێ'}};
 const labels={en:{balance:'Current balance',income:'Income',spent:'Spent',allStats:'All monthly statistics',empty:'No transactions yet.'},ku:{balance:'باڵانسی ئێستا',income:'داهات',spent:'خەرجکراو',allStats:'هەموو ئاماری مانگانە',empty:'هیچ مامەڵەیەک نییە.'}};
 let entries=JSON.parse(localStorage.getItem('pocket-ledger-entries')||'[]'),lang=localStorage.getItem('pocket-ledger-language')||'en',isDark=localStorage.getItem('pocket-ledger-dark')==='true';
@@ -11,4 +15,5 @@ function render(){const totalIn=entries.filter(x=>x.type==='income').reduce((s,x
 function localize(){document.documentElement.lang=lang==='ku'?'ckb':'en';document.documentElement.dir=lang==='ku'?'rtl':'ltr';document.querySelectorAll('[data-t]').forEach(n=>n.textContent=t(n.dataset.t));$('languageButton').textContent=lang==='en'?'کوردی':'EN';render()}
 $('languageButton').onclick=()=>{lang=lang==='en'?'ku':'en';localStorage.setItem('pocket-ledger-language',lang);localize()};
 $('themeButton').onclick=()=>{isDark=!isDark;localStorage.setItem('pocket-ledger-dark',isDark);document.body.classList.toggle('dark',isDark);$('themeButton').textContent=isDark?'☀':'☾'};
+$('currencyButton').textContent=currency;$('currencyButton').onclick=()=>{currency=currency==='USD'?'IQD':'USD';localStorage.setItem('pocket-ledger-currency',currency);$('currencyButton').textContent=currency;render()};
 document.body.classList.toggle('dark',isDark);$('themeButton').textContent=isDark?'☀':'☾';localize();
