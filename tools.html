@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102b25"><meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Welcome Engineer">
+  <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="home-icon-180.png"><link rel="stylesheet" href="styles.css"><title>Engineer Tools</title>
+</head>
+<body><main class="app-shell">
+  <header class="topbar"><div class="brand"><a href="index.html" class="small-button" aria-label="Back">←</a><h1>Engineer Tools</h1></div><div class="header-actions"><button id="currencyButton" class="small-button" type="button">USD</button><button id="themeButton" class="small-button" type="button" aria-label="Dark mode">☾</button></div></header>
+
+  <section id="dashboardView">
+    <div class="tools-grid">
+      <button class="tool-card" data-view="projectCost"><span class="tool-icon">🏗️</span><span>Project Cost Calculator</span></button>
+      <button class="tool-card" data-view="concrete"><span class="tool-icon">🧱</span><span>Concrete Calculator</span></button>
+      <button class="tool-card" data-view="steel"><span class="tool-icon">🔩</span><span>Steel / Rebar Calculator</span></button>
+      <button class="tool-card" data-view="converter"><span class="tool-icon">📐</span><span>Unit Converter</span></button>
+      <button class="tool-card" data-view="materials"><span class="tool-icon">📦</span><span>Material Cost Tracker</span></button>
+      <button class="tool-card" data-view="savedProjects"><span class="tool-icon">💾</span><span>Saved Projects</span></button>
+      <button class="tool-card" data-view="quotation"><span class="tool-icon">🧾</span><span>Quotation Generator</span></button>
+      <button class="tool-card" data-view="engineering"><span class="tool-icon">🧮</span><span>Engineering Calculator</span></button>
+    </div>
+    <section class="card">
+      <div class="section-heading"><h2>Currency settings</h2></div>
+      <label><span>IQD exchange rate (per 1 USD)</span><input id="iqdRateInput" type="number" min="1" step="1"></label>
+      <button id="saveRateButton" class="primary-button" type="button">Save rate</button>
+    </section>
+  </section>
+
+  <section id="toolView" style="display:none">
+    <button id="backToDashboard" class="text-button" type="button">‹ All tools</button>
+
+    <section id="projectCost" class="tool-panel card" hidden>
+      <h2>Project Cost Calculator</h2>
+      <label><span>Total area (m²)</span><input id="pcArea" type="number" min="0" step="0.01"></label>
+      <label><span>Cost per m²</span><input id="pcRate" type="number" min="0" step="0.01"></label>
+      <label><span>Labor (%)</span><input id="pcLabor" type="number" min="0" step="0.1" value="20"></label>
+      <label><span>Contingency / misc (%)</span><input id="pcMisc" type="number" min="0" step="0.1" value="10"></label>
+      <button id="pcCalc" class="primary-button" type="button">Calculate</button>
+      <div id="pcResult" class="result-box"></div>
+      <button id="pcSave" class="text-button" type="button" style="display:none">💾 Save this project</button>
+    </section>
+
+    <section id="concrete" class="tool-panel card" hidden>
+      <h2>Concrete Calculator</h2>
+      <label><span>Length (m)</span><input id="ccLength" type="number" min="0" step="0.01"></label>
+      <label><span>Width (m)</span><input id="ccWidth" type="number" min="0" step="0.01"></label>
+      <label><span>Depth / thickness (m)</span><input id="ccDepth" type="number" min="0" step="0.01"></label>
+      <label><span>Mix ratio</span><select id="ccMix"><option value="1:1.5:3">1:1.5:3 (M20, structural)</option><option value="1:2:4">1:2:4 (M15, general)</option><option value="1:3:6">1:3:6 (M10, mass/PCC)</option></select></label>
+      <button id="ccCalc" class="primary-button" type="button">Calculate</button>
+      <div id="ccResult" class="result-box"></div>
+    </section>
+
+    <section id="steel" class="tool-panel card" hidden>
+      <h2>Steel / Rebar Calculator</h2>
+      <label><span>Bar diameter (mm)</span><select id="stDia"><option>8</option><option>10</option><option>12</option><option selected>16</option><option>20</option><option>25</option><option>32</option></select></label>
+      <label><span>Bar length (m)</span><input id="stLength" type="number" min="0" step="0.01" value="12"></label>
+      <label><span>Number of bars</span><input id="stCount" type="number" min="0" step="1" value="1"></label>
+      <label><span>Steel price per kg</span><input id="stPrice" type="number" min="0" step="0.01"></label>
+      <button id="stCalc" class="primary-button" type="button">Calculate</button>
+      <div id="stResult" class="result-box"></div>
+    </section>
+
+    <section id="converter" class="tool-panel card" hidden>
+      <h2>Unit Converter</h2>
+      <label><span>Category</span><select id="ucCategory"></select></label>
+      <div class="converter-row">
+        <label><span>From</span><input id="ucFromValue" type="number" step="any" value="1"><select id="ucFromUnit"></select></label>
+        <label><span>To</span><input id="ucToValue" type="number" step="any" readonly><select id="ucToUnit"></select></label>
+      </div>
+    </section>
+
+    <section id="materials" class="tool-panel card" hidden>
+      <h2>Material Cost Tracker</h2>
+      <label><span>Material name</span><input id="matName"></label>
+      <label><span>Quantity</span><input id="matQty" type="number" min="0" step="0.01"></label>
+      <label><span>Unit</span><input id="matUnit" placeholder="bags, tons, m³, pcs..."></label>
+      <label><span>Cost</span><input id="matCost" type="number" min="0" step="0.01"></label>
+      <button id="matAdd" class="primary-button" type="button">Add material</button>
+      <div id="matList" class="material-list"></div>
+      <div id="matTotal" class="result-box"></div>
+    </section>
+
+    <section id="savedProjects" class="tool-panel card" hidden>
+      <h2>Saved Projects</h2>
+      <div id="spList" class="material-list"></div>
+    </section>
+
+    <section id="quotation" class="tool-panel card" hidden>
+      <h2>Quotation Generator</h2>
+      <label><span>Client / project name</span><input id="qName"></label>
+      <div id="qItems"></div>
+      <button id="qAddItem" class="text-button" type="button">+ Add line item</button>
+      <button id="qGenerate" class="primary-button" type="button">Generate quotation</button>
+      <div id="qResult" class="result-box quote-preview"></div>
+      <button id="qPrint" class="text-button" type="button" style="display:none">🖨 Print / Save as PDF</button>
+    </section>
+
+    <section id="engineering" class="tool-panel card" hidden>
+      <h2>Engineering Calculator</h2>
+      <input id="engDisplay" class="eng-display" readonly value="0">
+      <div id="engPad" class="eng-pad"></div>
+    </section>
+  </section>
+</main>
+<script src="tools.js"></script></body></html>
