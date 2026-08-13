@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#102b25"><meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Welcome Engineer">
+  <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="home-icon-180.png"><link rel="stylesheet" href="styles.css"><title>Monthly Statistics</title>
+</head>
+<body><main class="app-shell">
+  <header class="topbar"><div class="brand"><a id="backLink" href="index.html" class="small-button" aria-label="Back">←</a><h1 data-t="allStats">All monthly statistics</h1></div><div class="header-actions"><button id="themeButton" class="small-button" type="button" aria-label="Dark mode">☾</button><button id="languageButton" class="small-button" type="button">کوردی</button></div></header>
+  <section class="balance-card"><p data-t="balance">Current balance</p><strong id="balance">$0.00</strong><div class="summary-grid"><div><small data-t="income">Income</small><b id="incomeTotal">$0.00</b></div><div><small data-t="spent">Spent</small><b id="expenseTotal">$0.00</b></div></div></section>
+  <div id="monthsList"></div>
+</main>
+<template id="monthCardTemplate">
+  <section class="card month-card">
+    <div class="section-heading"><h2 class="month-card-title"></h2></div>
+    <div class="month-stats"><div><small data-t="income">Income</small><b class="mc-income">$0.00</b></div><div><small data-t="spent">Spent</small><b class="mc-expense">$0.00</b></div><div><small data-t="balance">Balance</small><b class="mc-balance">$0.00</b></div></div>
+    <div class="category-breakdown"></div>
+  </section>
+</template>
+<template id="categoryRowTemplate">
+  <div class="category-row"><span class="category-row-name"></span><span class="category-row-value"></span></div>
+</template>
+<script src="stats.js"></script></body></html>
